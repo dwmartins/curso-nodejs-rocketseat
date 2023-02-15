@@ -1,0 +1,5 @@
+# Visual Studio
+/.vscode
+
+# node
+/.node_module
