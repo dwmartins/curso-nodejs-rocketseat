@@ -23,8 +23,20 @@ app.post("/account", (req, res) => {
         id: uuidv4(),
         statement: []
     })
-    console.log(customers);
+   
     res.status(201).send();
+});
+
+app.get("/statement", (req, res) => {
+    const { cpf } = req.headers;
+
+    const customer = customers.find(customer => customer.cpf === cpf);
+
+    if(!customer) {
+        res.status(400).json({error: "Customer not found"});
+    }
+
+    res.json(customer.statement);
 })
 
 app.listen(3333, () => {
