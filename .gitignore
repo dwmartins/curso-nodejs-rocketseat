@@ -2,4 +2,4 @@
 /.vscode
 
 # node
-/.node_module
+/node_modules
