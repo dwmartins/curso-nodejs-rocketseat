@@ -50,7 +50,7 @@ app.post("/account", (req, res) => {
         statement: []
     })
    
-    res.status(201).send();
+    res.status(201).json([{mensagem: "Conta criada com sucesso!"}]);
 });
 
 app.get("/statement", verifyIfExistsAccountCPF, (req, res) => {
@@ -112,6 +112,35 @@ app.get("/statement/date", verifyIfExistsAccountCPF, (req, res) => {
     res.json(customer.statement);
 });
 
+app.put("/account", verifyIfExistsAccountCPF, (req, res) => {
+    const { name } = req.body;
+    const { customer } = req;
+
+    customer.name = name;
+
+    res.status(201).send();
+});
+
+app.get("/account", verifyIfExistsAccountCPF, (req, res) => {
+    const { customer } = req;
+    res.json(customer);
+})
+
+app.delete("/account", verifyIfExistsAccountCPF, (req, res) => {
+    const { customer } = req;
+
+    customers.splice(customer, 1);
+
+    res.status(200).json(customers);
+})
+
+app.get("/balance", verifyIfExistsAccountCPF, (req, res) => {
+    const { customer } = req;
+
+    const balance = getBalance(customer.statement);
+
+    res.json(balance);
+})
 app.listen(3333, () => {
     console.log("Servidor iniciado com sucesso!")
 });
